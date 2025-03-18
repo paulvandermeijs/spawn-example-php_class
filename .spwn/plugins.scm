@@ -1,6 +1,23 @@
 (require-builtin steel/hash)
 
-; Add namespace to the context from composer.json autoload config
+(define (validate identifier value)
+  (case identifier
+    [("class_name") (validate-class-name value)]
+    [("namespace") (validate-namespace value)]
+    [else #t]))
+
+; Validate class name
+(define (validate-class-name name)
+  (cond
+    [(string-contains? name " ") "Class name can't contain spaces"]
+    [else #t]))
+
+; Validate namespace
+(define (validate-namespace namespace)
+  (cond
+    [(string-contains? namespace " ") "Namespace can't contain spaces"]
+    [else #t]))
+
 (define (context)
   (let* ((context (hash))
          (context (set-namespace context)))
