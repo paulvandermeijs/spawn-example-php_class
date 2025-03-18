@@ -2,6 +2,12 @@
 
 ; Add namespace to the context from composer.json autoload config
 (define (context)
+  (let* ((context (hash))
+         (context (set-namespace context)))
+    context))
+
+; Add namespace to the context from composer.json autoload config
+(define (set-namespace context)
   (let* ((composer-path (find-composer (current-directory))))
     (if composer-path
       (let* ((composer-content (read-port-to-string (open-input-file composer-path)))
@@ -14,8 +20,8 @@
              (namespace (or (and psr4 (get-namespace psr4 composer-dir current-dir))
                          (and psr0 (get-namespace psr0 composer-dir current-dir))
                          "")))
-        (hash 'namespace namespace))
-      (hash 'namespace #f))))
+        (hash-insert context 'namespace namespace))
+      context)))
 
 ; Search parents of given path for a Composer file
 (define (find-composer path)
