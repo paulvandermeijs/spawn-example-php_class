@@ -1,8 +1,10 @@
 [[var]]
 identifier = "class_name"
+type = "text"
 message = "How would you like to name your class?"
 
 [[var]]
 identifier = "namespace"
+type = "text"
 help_message = "Namespaces are used to group related classes and prevent naming conflicts."
 
